@@ -3,6 +3,7 @@ import { Code2, Trophy, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import LoginComponent from "@/components/Login/LoginComponent";
 
 export function Header() {
   return (
@@ -45,10 +46,7 @@ export function Header() {
           <Button variant="ghost" size="icon" className="text-muted-foreground">
             <Trophy className="h-5 w-5" />
           </Button>
-          <Button variant="outline" size="sm" className="gap-2">
-            <User className="h-4 w-4" />
-            登录
-          </Button>
+          <LoginComponent />
         </div>
       </div>
     </motion.header>
