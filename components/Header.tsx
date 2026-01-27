@@ -1,11 +1,13 @@
 "use client";
-import { Code2, Trophy, User } from "lucide-react";
+import { Code2, Settings, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import LoginComponent from "@/components/Login/LoginComponent";
 
 export function Header() {
+  const router = useRouter();
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
@@ -47,6 +49,14 @@ export function Header() {
             <Trophy className="h-5 w-5" />
           </Button>
           <LoginComponent />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-muted-foreground"
+            onClick={() => router.push("/admin")}
+          >
+            <Settings className="h-5 w-5" />
+          </Button>
         </div>
       </div>
     </motion.header>

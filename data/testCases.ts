@@ -1,6 +1,6 @@
 import { TestCase } from "@/lib/codeRunner";
 
-// Test cases for each problem by ID
+// Test cases for each problems by ID
 export const problemTestCases: Record<number, TestCase[]> = {
   // Problem 1: Implement Array.prototype.map
   1: [
@@ -96,7 +96,7 @@ export const problemTestCases: Record<number, TestCase[]> = {
   ],
 };
 
-// Get test cases for a specific problem
+// Get test cases for a specific problems
 export function getTestCases(problemId: number): TestCase[] {
   return problemTestCases[problemId] || [];
 }
