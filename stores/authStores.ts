@@ -10,32 +10,13 @@ export type User = {
 
 type AuthState = {
   user: User | null;
-  token: string | null;
 
-  setAuth: (user: User, token: string) => void;
+  setUser: (user: User) => void;
   logout: () => void;
 };
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
-      user: null,
-      token: null,
-
-      setAuth: (user, token) =>
-        set({
-          user,
-          token,
-        }),
-
-      logout: () =>
-        set({
-          user: null,
-          token: null,
-        }),
-    }),
-    {
-      name: "auth-storage", // localStorage key
-    },
-  ),
-);
+export const useAuthStore = create<AuthState>((set) => ({
+  user: null,
+  setUser: (user) => set({ user }),
+  logout: () => set({ user: null }),
+}));
