@@ -18,17 +18,7 @@ const LoginComponent = () => {
             <User className="h-4 w-4" />
             登录
           </Button>
-          <Modal
-            open={open}
-            onOpenChange={setOpen}
-            title="登录/注册"
-            footer={
-              <>
-                <button onClick={() => setOpen(false)}>取消</button>
-                <button className="px-3 py-1 bg-blue-500 text-white rounded">确定</button>
-              </>
-            }
-          >
+          <Modal open={open} onOpenChange={setOpen} title="登录/注册" footer={null}>
             <LoginPanel />
           </Modal>
         </>

@@ -1,7 +1,6 @@
 import { TCommonLayoutAndPageProps } from "@/types/index";
 import { FC } from "react";
-import cx from "clsx";
-import { Geist, Geist_Mono } from "next/font/google";
+import Providers from "./providers";
 import "./global.css";
 import type { Metadata } from "next";
 
@@ -23,7 +22,9 @@ export const metadata: Metadata = {
 const RootLayout: FC<TCommonLayoutAndPageProps> = ({ children }) => {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 };

@@ -85,4 +85,5 @@
   --color-muted-foreground: hsl(220 10% 40%);
   --container-padding: 2rem;
   --container-2xl: 1400px;
+  --color-inset:var(--color-primary);
 }

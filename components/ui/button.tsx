@@ -3,6 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+import Spin from "@/components/ui/spin";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 cursor-pointer",
@@ -33,16 +34,67 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  loading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      onClick,
+      disabled,
+      loading: loadingProp,
+      children,
+      ...props
+    },
+    ref,
+  ) => {
     const Comp = asChild ? Slot : "button";
+
+    const [innerLoading, setInnerLoading] = React.useState(false);
+    const loading = loadingProp ?? innerLoading;
+
+    const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (loading || disabled) return;
+
+      try {
+        const result = onClick?.(e) as unknown;
+        if (result instanceof Promise) {
+          setInnerLoading(true);
+          await result;
+        }
+      } finally {
+        setInnerLoading(false);
+      }
+    };
+
     return (
-      <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
+      <Comp
+        ref={ref}
+        className={cn(
+          buttonVariants({ variant, size }),
+          loading && "pointer-events-none opacity-70",
+          className,
+        )}
+        onClick={handleClick}
+        disabled={disabled || loading}
+        aria-busy={loading}
+        {...props}
+      >
+        {loading ? (
+          <span className="inline-flex items-center gap-2">
+            <Spin />
+            <span className="sr-only">Loading</span>
+          </span>
+        ) : (
+          children
+        )}
+      </Comp>
     );
   },
 );
 Button.displayName = "Button";
-
-export { Button, buttonVariants };
+export { Button };
