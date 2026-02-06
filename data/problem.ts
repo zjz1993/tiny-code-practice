@@ -1,24 +1,13 @@
-export type Difficulty = "easy" | "medium" | "hard";
-export type Category = "JavaScript" | "CSS" | "HTML" | "React" | "TypeScript" | "DOM";
+import { Problem } from "@/types/index";
 
-export interface Problem {
-  id: number;
-  title: string;
-  titleCn: string;
-  difficulty: Difficulty;
-  category: Category;
-  tags: string[];
-  acceptance: number;
-  description: string;
-  examples: {
-    input: string;
-    output: string;
-    explanation?: string;
-  }[];
-  starterCode: string;
-  solution?: string;
-  solved?: boolean;
-}
+export type Difficulty = "easy" | "medium" | "hard";
+export type Category =
+  | "JavaScript"
+  | "CSS"
+  | "HTML"
+  | "React"
+  | "TypeScript"
+  | "DOM";
 
 export const problems: Problem[] = [
   {
@@ -371,7 +360,14 @@ type DeepReadonly<T> = // 在这里实现`,
   },
 ];
 
-export const categories: Category[] = ["JavaScript", "CSS", "HTML", "React", "TypeScript", "DOM"];
+export const categories: Category[] = [
+  "JavaScript",
+  "CSS",
+  "HTML",
+  "React",
+  "TypeScript",
+  "DOM",
+];
 
 export const getDifficultyColor = (difficulty: Difficulty) => {
   switch (difficulty) {

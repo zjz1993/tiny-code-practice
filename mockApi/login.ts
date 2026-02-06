@@ -1,5 +1,5 @@
 import { delay } from "@/lib/utils";
-import { User } from "@/stores/authStores";
+import { User } from "@/types";
 
 export type TApi<T> = {
   code: number;

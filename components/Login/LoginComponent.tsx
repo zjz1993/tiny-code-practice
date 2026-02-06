@@ -3,26 +3,36 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Modal } from "@/components/ui/modal/index";
 import LoginPanel from "@/components/Login/LoginPanel";
-import { useAuthStore } from "@/stores/authStores";
+import useGetUser from "@/hooks/useGetUser";
+import LoginUserPanel from "@/components/Login/LoginUserPanel";
 
 const LoginComponent = () => {
   const [open, setOpen] = useState(false);
-  const user = useAuthStore((s) => s.user);
+  const user = useGetUser();
   return (
     <>
       {user ? (
-        <div>你好{user.username}</div>
+        <LoginUserPanel />
       ) : (
         <>
-          <Button variant="outline" size="sm" className="gap-2" onClick={() => setOpen(true)}>
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-2"
+            onClick={() => setOpen(true)}
+          >
             <User className="h-4 w-4" />
             登录
           </Button>
-          <Modal open={open} onOpenChange={setOpen} title="登录/注册" footer={null}>
-            <LoginPanel />
-          </Modal>
         </>
       )}
+      <Modal open={open} onOpenChange={setOpen} title="登录/注册" footer={null}>
+        <LoginPanel
+          onLoginSuccess={() => {
+            setOpen(false);
+          }}
+        />
+      </Modal>
     </>
   );
 };

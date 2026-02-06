@@ -2,14 +2,19 @@ import { Input } from "../ui/input";
 import { z } from "zod";
 import { Form, FormField } from "@/components/form";
 import { Button } from "@/components/ui/button";
-import { useAuthStore, User } from "@/stores/authStores";
+import { useAuthStore } from "@/stores/authStores";
 import { apiPost } from "@/lib/request";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { delay } from "@/lib/utils/index";
+import { User } from "@/types/index";
 
 const loginSchema = z.object({
-  email: z.string().trim().min(1, { message: "请输入邮箱" }).email("请输入正确格式的邮箱"),
+  email: z
+    .string()
+    .trim()
+    .min(1, { message: "请输入邮箱" })
+    .email("请输入正确格式的邮箱"),
   password: z
     .string({ required_error: "请输入密码" })
     .trim()
@@ -19,13 +24,18 @@ const loginSchema = z.object({
 
 type LoginValues = z.infer<typeof loginSchema>;
 
-const LoginPanel = () => {
+const LoginPanel = ({ onLoginSuccess }: { onLoginSuccess: () => void }) => {
   const [mode] = useState("login");
+  const [form] = Form.useForm({
+    schema: loginSchema,
+    defaultValues: { email: "", password: "" },
+  });
   const setUser = useAuthStore((s) => s.setUser);
   return (
     <div>
       <AnimatePresence mode="wait">
         <Form
+          form={form}
           schema={loginSchema}
           onSubmit={async (values) => {
             console.log("values是", values);
@@ -54,9 +64,14 @@ const LoginPanel = () => {
           </FormField>
 
           <Button
-            className="w-full mb-[8px]"
+            className="w-full mb-2"
             onClick={async () => {
-              await delay();
+              const data = await form.validate();
+              const res = await apiPost<{ user: User }>("/api/login", {
+                ...data,
+              });
+              setUser(res.user);
+              onLoginSuccess();
             }}
           >
             登录

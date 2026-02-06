@@ -1,11 +1,5 @@
 import { create } from "zustand";
-
-export type User = {
-  id: string;
-  username: string;
-  email: string;
-  role?: "admin" | "user";
-};
+import { User } from "@/types/index";
 
 type AuthState = {
   user: User | null;

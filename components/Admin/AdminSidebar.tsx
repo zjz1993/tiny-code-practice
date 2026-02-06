@@ -1,5 +1,11 @@
 "use client";
-import { Users, Tags, FileText, LayoutDashboard, ChevronLeft } from "lucide-react";
+import {
+  Users,
+  Tags,
+  FileText,
+  LayoutDashboard,
+  ChevronLeft,
+} from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
   Sidebar,
@@ -28,8 +34,8 @@ export function AdminSidebar() {
   const isCollapsed = state === "collapsed";
 
   return (
-    <Sidebar collapsible="icon">
-      <SidebarHeader className="border-b border-border/50 p-4">
+    <Sidebar collapsible="icon" className="border-border">
+      <SidebarHeader className="border-b border-border/50 h-[48px]">
         <Link href="/admin" className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
             <LayoutDashboard className="h-4 w-4 text-primary" />
@@ -64,7 +70,12 @@ export function AdminSidebar() {
       </SidebarContent>
 
       <div className="mt-auto p-4 border-t border-border/50">
-        <Button variant="ghost" size="sm" className="w-full justify-start gap-2" asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="w-full justify-start gap-2"
+          asChild
+        >
           <Link href="/">
             <ChevronLeft className="h-4 w-4" />
             {!isCollapsed && <span>返回前台</span>}

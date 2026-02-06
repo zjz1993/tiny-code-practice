@@ -1,10 +1,10 @@
 import { Check, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { Problem } from "@/data/problem";
 import { DifficultyBadge } from "./DifficultyBadge";
 import { CategoryBadge } from "./CategoryBadge";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { Problem } from "@/types/index";
 
 interface ProblemCardProps {
   problem: Problem;
@@ -53,7 +53,9 @@ export function ProblemCard({ problem, index }: ProblemCardProps) {
               </div>
               <div className="flex items-center gap-2">
                 <CategoryBadge category={problem.category} />
-                <span className="text-xs text-muted-foreground">通过率 {problem.acceptance}%</span>
+                <span className="text-xs text-muted-foreground">
+                  通过率 {problem.acceptance}%
+                </span>
               </div>
             </div>
 
